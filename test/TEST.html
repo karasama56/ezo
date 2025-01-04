@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TEST</title>
+    <!-- cs插件 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/test/slodeShow.css">
+    <link rel="stylesheet" href="/test/test.css">
+    <link rel="stylesheet" href="/test/text.css">
+</head>
+
+<body>
+    <div class="navbar">
+
+        <!-- 選單 -->
+        <ul>
+            <li><a class="active" href="#home"><i class="fa-solid fa-arrow-turn-up"></i>首頁</a></li>
+            <li><a href="#contact"><i class="fa-solid fa-book"></i>任務看板</a></li>
+            <li><a href="#news"><i class="fa-solid fa-shield"></i></i>武器店</a></li>
+            <li><a href="#news"><i class="fa-solid fa-martini-glass"></i></i>酒館</a></li>
+            <li><a href="#about"><i class="fa-solid fa-cart-shopping"></i> 購物車</a></li>
+            <li><a href="#about"><i class="fa-solid fa-user-plus"></i> 會員</a></li>
+        </ul>
+    </div>
+
+    <!-- 左側固定圖片區 -->
+    <div class="left-section"></div>
+
+    <!-- 右側內容區域 -->
+
+    <!-- 滾動文字 -->
+
+    <div id="container" class="right-section2"></div>
+
+    <!-- 純文字內容 -->
+    <div class="right-section">
+        <div class="container">
+            <div class="wrapper">
+                <a class="arrow" id="slidePrev"><i class="fa-solid fa-circle-left"></i></a>
+                <a class="arrow right" id="slideNext"><i class="fa-solid fa-circle-right"></i></a>
+                <ul class="slide-imgs" id="slideImgs">
+                    <li><img src="/test/1.jpg" alt=""></li>
+                    <li><img src="/test/2.jpg" alt=""></li>
+                    <li><img src="/test/3.jpg" alt=""></li>
+                    <li><img src="/test/4.jpg" alt=""></li>
+                    <li><img src="/test/5.jpg" alt=""></li>
+                </ul>
+                <ul class="pages">
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+            </div>
+        </div>
+        <h1>右邊區塊的內容</h1>
+        <p>這是右邊區域的內容，您可以添加更多的內容或其他元素。</p>
+        <p>當您向下滾動頁面時，左邊的圖片會保持在固定位置。</p>
+        <p>右側區域的內容會隨著頁面滾動，並不會與左側的圖片重疊。</p>
+        <p>這樣的排版保證了圖片顯示完整，而不會被其他內容覆蓋。</p>
+        <p>您可以繼續添加更多的段落，圖片的大小和位置已經做了優化，確保頁面外觀良好。</p>
+    </div>
+
+
+
+
+
+
+
+    <script>
+
+        const data = ['你好啊！冒險者，今天有新的任務記得查看！', '添購新的裝備了嗎？也記得前往酒館認識新朋友']
+        const arr = []
+        const container = document.querySelector('#container')
+        for (const item of data) {
+            console.log(item)
+            const p = document.createElement('p')
+            for (let i = 0; i < item.length; i++) {
+                let span = document.createElement('span')
+                span.innerHTML = item[i]
+                p.append(span)
+                arr.push(span)
+            }
+            container.append(p)
+        }
+
+        setTimeout(() => {
+            arr.forEach((item, index) => {
+                item.style.transitionDelay = `${index * 0.1}s`
+                item.style.opacity = 1
+            })
+        }, 1)
+
+
+
+        window.onload = function () {
+            // javascript
+            /*
+                1.設定整體範圍(畫框)樣式
+                    放第一張圖
+                2.放五張圖
+                    移動圖片邏輯
+                3.設定分頁樣式
+                4.分頁移動邏輯
+                    4-1:換頁第一張圖
+                    4-2:換N張圖
+                5.分頁換色
+                6.設定箭頭樣式
+            */
+            let index = 0;
+            let slideImgs = document.getElementById('slideImgs');
+            // slideImgs.style.left = '-3200px';
+            let pages = document.querySelectorAll('.pages li');
+            // console.log(pages);
+            pages[index].style.backgroundColor = 'white';
+            for (let i = 0; i < pages.length; i++) {
+                pages[i].addEventListener('mouseover', function () {
+                    // slideImgs.style.left = '-800px';
+                    index = i;
+                    // let slideMove = -800 * index;
+                    // // 圖片移動邏輯
+                    // slideImgs.style.left = slideMove + 'px';
+                    // // 分頁換色
+                    // for (let j = 0; j < pages.length; j++) {
+                    //     pages[j].style.backgroundColor = '';
+                    // }
+                    // pages[index].style.backgroundColor = 'white';
+                    moveImg();
+                })
+            }
+
+            // 右箭頭移動邏輯
+            document.getElementById('slideNext').addEventListener('click', function () {
+                index++;
+                if (index >= pages.length) {
+                    index = 0;
+                }
+                // let slideMove = -800 * index;
+                // slideImgs.style.left = slideMove + 'px';
+                // for (let j = 0; j < pages.length; j++) {
+                //     pages[j].style.backgroundColor = '';
+                // }
+                // pages[index].style.backgroundColor = 'white';
+                moveImg();
+            })
+
+            // 左箭頭移動邏輯
+            document.getElementById('slidePrev').addEventListener('click', function () {
+                index--;
+                if (index < 0) {
+                    index = pages.length - 1;
+                }
+                // let slideMove = -800 * index;
+                // slideImgs.style.left = slideMove + 'px';
+                // for (let j = 0; j < pages.length; j++) {
+                //     pages[j].style.backgroundColor = '';
+                // }
+                // pages[index].style.backgroundColor = 'white';
+                moveImg();
+            })
+
+            function moveImg() {
+                let slideMove = -700 * index;
+                slideImgs.style.left = slideMove + 'px';
+                for (let j = 0; j < pages.length; j++) {
+                    pages[j].style.backgroundColor = '';
+                }
+                pages[index].style.backgroundColor = 'white';
+            }
+
+            // 定時器
+            setInterval(function () {
+                index++;
+                if (index >= pages.length) {
+                    index = 0;
+                }
+                moveImg()
+            }, 6000);
+        }
+
+
+
+
+    </script>
+
+</body>
+
+</html>
